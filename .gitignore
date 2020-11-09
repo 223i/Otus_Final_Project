@@ -1,0 +1,10 @@
+**/.idea
+**/*.iml
+**/target
+**/.DS_Store
+**/allure-results
+**/.allure
+out/
+**/*.log
+**/*.txt
+cm
