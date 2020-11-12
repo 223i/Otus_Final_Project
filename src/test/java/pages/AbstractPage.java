@@ -1,4 +1,4 @@
-package HomeWork5.pages;
+package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -7,35 +7,27 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.List;
-
-import static HomeWork5.driver.DriverManager.getWebDriver;
+import static driver.DriverManager.getWebDriver;
 
 public abstract class AbstractPage {
 
     protected static WebDriver driver;
-    protected List<WebElement> menuItems;
-    protected String headline = "//div[@class = 'new-log-reg__login']//div[@class= 'new-log-reg__title']";
+//    protected String mainMenu = "//div[@class='evnt-platform-header']";
+    protected String menuCalendarButton = "//div[@class='evnt-platform-header']//li/a[@href='/calendar']";
+    protected String menuEventsButton = "//div[@class='evnt-platform-header']//li/a[@href='/events']";
+    protected String menuVideoButton = "//div[@class='evnt-platform-header']//li/a[contains(text(), 'Video')]";
 
     public AbstractPage() {
         this.driver = getWebDriver();
     }
 
 
-    protected WebElement waitForElement(By elementBy) {
+    protected WebElement waitForElement(String elementBy) {
         WebDriverWait waitForOne = new WebDriverWait(driver, 15);
-        waitForOne.until(ExpectedConditions.presenceOfElementLocated(elementBy));
-        return driver.findElement(elementBy);
+        waitForOne.until(ExpectedConditions.presenceOfElementLocated(By.xpath(elementBy)));
+        return driver.findElement(By.xpath(elementBy));
     }
 
-    protected void clickMenuItem(String menuItemName) {
-        for (WebElement item : menuItems) {
-            if (item.getText().toLowerCase().equals(menuItemName.toLowerCase())) {
-                item.click();
-                break;
-            }
-        }
-    }
 
     protected void elementClick(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
