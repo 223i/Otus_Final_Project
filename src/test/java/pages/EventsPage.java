@@ -17,6 +17,7 @@ public class EventsPage extends AbstractPage {
     protected String eventCardEventRegistration = "//div[@class = 'evnt-event-dates']//span[@class = 'status free-attend']";
     protected String eventCardEventSpeakers = "//div[@class = 'evnt-people-table']";
     protected String singleSpeaker = "//div[@class='evnt-speaker']";
+    protected String thisWeekEventsContainer = "//div[@class='evnt-cards-container']/h3";
 
     public EventsPage(WebDriver driver) {
         super(driver);
@@ -32,6 +33,11 @@ public class EventsPage extends AbstractPage {
 
     public List<WebElement> getAllEventCards(){
         return driver.findElements(By.xpath(anyEventCard));
+    }
+
+    public List<WebElement> getThisWeekEventCards(){
+        WebElement thisWeek = driver.findElement(By.xpath(thisWeekEventsContainer));
+        return thisWeek.findElements(By.xpath(anyEventCard));
     }
 
     public String getEventCardPlaceValue(WebElement event) {
