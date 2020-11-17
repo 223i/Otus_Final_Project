@@ -8,8 +8,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import pages.EventPage;
 import pages.EventsPage;
 import pages.StartPage;
 
@@ -97,7 +99,7 @@ public class CheckUpcomingEventsTest extends DriverHooks {
         logger.info("Test finished");
     }
 
-    /**
+    /**Тест проверяет следующий сценарий:
      * 3. Валидация дат предстоящих мероприятий:
      * 3.1 Пользователь переходит на вкладку events
      * 3.2 Пользователь нажимает на Upcoming Events
@@ -138,6 +140,38 @@ public class CheckUpcomingEventsTest extends DriverHooks {
             }
         });
 
+        logger.info("Test finished");
+    }
+
+
+    /**
+     * Тест проверяет следующий сценарий:
+     * 5. Просмотр детальной информации о мероприятии:
+     * 5.1 Пользователь переходит на вкладку events
+     * 5.2 Пользователь нажимает на Upcoming Events
+     * 5.3 На странице отображаются карточки предстоящих мероприятий.
+     * 5.4 Пользователь нажимает на любую карточку
+     * 5.5 Происходит переход на страницу с подробной информацией о мероприятии
+     * 5.6 На странице с информацией о мероприятии отображается блок с кнопкой для регистрации,
+     *      дата и время, программа мероприятия
+     */
+    @Test
+    public void checkDetailedInformationAboutEventTest(){
+        logger.info("Test starts");
+        WebDriver driver = DriverManager.getWebDriver();
+        driver.get(cfg.url());
+        logger.info("Start page 'Events EPAM URL' is opened");
+        StartPage startPage = new StartPage(driver);
+        EventsPage events = startPage.clickButtonEvents();
+        logger.info("Events page is opened");
+        events.clickButtonEvents("Upcoming events");
+        logger.info("Button 'Upcoming events' is clicked");
+        EventPage pageOfOneEvent = events.openEventCard();
+        logger.info("Page of event is opened");
+        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getButtonRegister()));
+        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getInformationAboutEvent()));
+        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getDateAndTimeOfEvent()));
+        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getAgenda()));
         logger.info("Test finished");
     }
 }

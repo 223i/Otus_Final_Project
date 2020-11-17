@@ -54,6 +54,11 @@ public class EventsPage extends AbstractPage {
         return driver.findElements(By.xpath(anyEventCard));
     }
 
+    public EventPage openEventCard(){
+        elementClick(driver.findElement(By.xpath(anyEventCard)));
+        return new EventPage(driver);
+    }
+
     public List<WebElement> getThisWeekEventCards(){
         WebElement thisWeek = driver.findElement(By.xpath(thisWeekEventsContainer));
         return thisWeek.findElements(By.xpath(anyEventCard));
