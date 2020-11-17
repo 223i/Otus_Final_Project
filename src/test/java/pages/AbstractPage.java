@@ -30,4 +30,6 @@ public abstract class AbstractPage {
     protected void elementClick(WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].click();", element);
     }
+
+
 }

@@ -12,4 +12,10 @@ public class StartPage extends AbstractPage {
         elementClick(waitForElement(menuEventsButton));
         return new EventsPage(driver);
     }
+
+    public VideoPage clickButtonVideo(){
+        elementClick(waitForElement(menuVideoButton));
+        return new VideoPage(driver);
+    }
+
 }
