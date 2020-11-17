@@ -3,12 +3,14 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.List;
 
 public class EventsPage extends AbstractPage {
-    protected String buttonUpcomingEvents = "//span[contains(text(), 'Upcoming events')]";
-    protected String counterUpcomingEvents = "//span[@class = 'evnt-tab-counter evnt-label small white']";
+    protected String buttonUpcomingOrPastEvents = "//span[contains(text(), '%s')]";
+    protected String counterEvents = "//span[contains(text(),'%s')]/following-sibling::*[@class = 'evnt-tab-counter evnt-label small white']";
     protected String anyEventCard = "//a/div[@class = 'evnt-card-wrapper']";
     protected String eventCardPlace = "//div[@class = 'evnt-card-heading']//div[@class = 'evnt-details-cell online-cell']/p";
     protected String eventCardLanguage = "//div[@class = 'evnt-card-heading']//div/p[@class = 'language']";
@@ -18,17 +20,34 @@ public class EventsPage extends AbstractPage {
     protected String eventCardEventSpeakers = "//div[@class = 'evnt-people-table']";
     protected String singleSpeaker = "//div[@class='evnt-speaker']";
     protected String thisWeekEventsContainer = "//div[@class='evnt-cards-container']/h3";
+    protected String filterLocation = "//div[@id='filter_location']";
+    protected String searchFieldInFilter = "/following-sibling::*//div[@class='evnt-filter-menu-search-wrapper']/input";
+    protected String checkboxForValueInFilter = "//div[@class='evnt-checkbox form-check']/label[@data-value = '%s']";
+    protected String appliedFilterValue = "//div[@class='evnt-tag evnt-filters-tags with-delete-elem']/label[contains(text(), '%s')]";
 
     public EventsPage(WebDriver driver) {
         super(driver);
     }
 
-    public String getCounterValue() {
-        return driver.findElement(By.xpath(counterUpcomingEvents)).getText();
+    public String getCounterValue(String counterType) {
+        WebElement counter = driver.findElement(By.xpath(counterEvents.replace("%s", counterType)));
+        return counter.getText();
     }
 
-    public void clickButtonUpcomingEvents() {
-        elementClick(waitForElement(buttonUpcomingEvents));
+    public void clickButtonEvents(String eventType) {
+        String buttonLocator = buttonUpcomingOrPastEvents.replace("%s", eventType);
+        elementClick(waitForElement(buttonLocator));
+    }
+
+    public void applyLocationFilter(String locationValue){
+        WebElement filter = driver.findElement(By.xpath(filterLocation));
+        elementClick(filter);
+        WebElement filterField = filter.findElement(By.xpath(filterLocation + searchFieldInFilter));
+        filterField.sendKeys(locationValue);
+        filterField.findElement(By.xpath(checkboxForValueInFilter.replace("%s", locationValue))).click();
+        elementClick(driver.findElement(By.xpath(filterLocation)));
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(appliedFilterValue.replace("%s", locationValue))));
     }
 
     public List<WebElement> getAllEventCards(){

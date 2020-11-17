@@ -43,10 +43,10 @@ public class CheckUpcomingEventsTest extends DriverHooks {
         StartPage startPage = new StartPage(driver);
         EventsPage events = startPage.clickButtonEvents();
         logger.info("Events page is opened");
-        events.clickButtonUpcomingEvents();
+        events.clickButtonEvents("Upcoming events");
         Assert.assertTrue(events.getAllEventCards().size() != 0);
         logger.info("Button 'Upcoming events' is clicked");
-        String eventsNumber = events.getCounterValue();
+        String eventsNumber = events.getCounterValue("Upcoming");
         String eventCardsNumber = "" + events.getAllEventCards().size();
         Assert.assertEquals(eventsNumber, eventCardsNumber);
         logger.info("Test finished");
@@ -74,7 +74,7 @@ public class CheckUpcomingEventsTest extends DriverHooks {
         StartPage startPage = new StartPage(driver);
         EventsPage events = startPage.clickButtonEvents();
         logger.info("Events page is opened");
-        events.clickButtonUpcomingEvents();
+        events.clickButtonEvents("Upcoming events");
         logger.info("Button 'Upcoming events' is clicked");
         List<WebElement> allFoundEvents = events.getAllEventCards();
         for (int i = 0; i < allFoundEvents.size(); i++) {
@@ -113,7 +113,7 @@ public class CheckUpcomingEventsTest extends DriverHooks {
         StartPage startPage = new StartPage(driver);
         EventsPage events = startPage.clickButtonEvents();
         logger.info("Events page is opened");
-        events.clickButtonUpcomingEvents();
+        events.clickButtonEvents("Upcoming events");
         logger.info("Button 'Upcoming events' is clicked");
 
         Date dateNow = new Date();
@@ -137,5 +137,7 @@ public class CheckUpcomingEventsTest extends DriverHooks {
                 e.printStackTrace();
             }
         });
+
+        logger.info("Test finished");
     }
 }
