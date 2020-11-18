@@ -6,10 +6,15 @@ import hooks.DriverHooks;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import pages.StartPage;
 import pages.VideoPage;
+import pages.VideosPage;
+
+import java.util.List;
 
 public class CheckVideoTabEventsTest extends DriverHooks {
 
@@ -26,17 +31,36 @@ public class CheckVideoTabEventsTest extends DriverHooks {
      * 6.4 На странице отображаются карточки соответствующие правилам выбранных фильтров
      */
     @Test
-    public void FilterPresentationsByCategoriesTest(){
+    public void FilterPresentationsByCategoriesTest() {
         logger.info("Test starts");
         WebDriver driver = DriverManager.getWebDriver();
         driver.get(cfg.url());
         logger.info("Start page 'Events EPAM URL' is opened");
         StartPage startPage = new StartPage(driver);
-        VideoPage videoPage = startPage.clickButtonVideo();
-        videoPage.clickFilterField(videoPage.getMoreFilters());
-        videoPage.setFilterValue(videoPage.getDefinedFilter(), "Category", "Testing");
-        videoPage.setFilterValue(videoPage.getDefinedFilter(), "Location", "Belarus");
-        videoPage.setFilterValue(videoPage.getDefinedFilter(), "Language", "ENGLISH");
+        VideosPage videosPage = startPage.clickButtonVideo();
+        videosPage.clickFilterField(videosPage.getMoreFilters());
+        videosPage.setFilterValue(videosPage.getDefinedFilter(), "Category", "Testing");
+        videosPage.setFilterValue(videosPage.getDefinedFilter(), "Location", "Belarus");
+        videosPage.setFilterValue(videosPage.getDefinedFilter(), "Language", "ENGLISH");
 
+        List<String> allSelectedTags = videosPage.getAllSelectedTags();
+
+        //TODO refactor into step
+        for (int i = 0; i < videosPage.getAllVideosCards().size(); i++) {
+            List<WebElement> allFoundVideos = videosPage.getAllVideosCards();
+            VideoPage videoPage = videosPage.openVideoCard(allFoundVideos.get(i));
+            List<String> tagsOfVideo = videoPage.getAllTopics();
+            boolean hasVideoChosenTag = false;
+            for (String tag : tagsOfVideo) {
+                if (allSelectedTags.contains(tag)) {
+                    hasVideoChosenTag = true;
+                    break;
+                }
+            }
+            Assert.assertTrue(hasVideoChosenTag);
+            videosPage = videoPage.goBackToAllVideos();
+        }
+
+        logger.info("Test finished");
     }
 }

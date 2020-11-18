@@ -13,9 +13,9 @@ public class StartPage extends AbstractPage {
         return new EventsPage(driver);
     }
 
-    public VideoPage clickButtonVideo(){
+    public VideosPage clickButtonVideo(){
         elementClick(waitForElement(menuVideoButton));
-        return new VideoPage(driver);
+        return new VideosPage(driver);
     }
 
 }
