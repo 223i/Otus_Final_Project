@@ -63,4 +63,27 @@ public class CheckVideoTabEventsTest extends DriverHooks {
 
         logger.info("Test finished");
     }
+
+    /**
+     * Tест проверяет следующий сценарий:
+     * 7. Поиск докладов по ключевому слову:
+     * 7.1 Пользователь переходит на вкладку Video
+     * 7.2 Пользователь вводит ключевое слово QA в поле поиска
+     * 7.3 На странице отображаются доклады, содержащие в названии ключевое слово поиска
+     */
+    @Test
+    public void searchReportByKeyWordTest(){
+        logger.info("Test starts");
+        WebDriver driver = DriverManager.getWebDriver();
+        driver.get(cfg.url());
+        logger.info("Start page 'Events EPAM URL' is opened");
+        StartPage startPage = new StartPage(driver);
+        VideosPage videosPage = startPage.clickButtonVideo();
+        videosPage.filterByKeyWord("QA");
+        List<WebElement> allFoundVideos = videosPage.getAllVideosCards();
+        for (WebElement videoCard: allFoundVideos) {
+            Assert.assertTrue(videosPage.getVideoName(videoCard).contains("QA"));
+        }
+        logger.info("Test finished");
+    }
 }

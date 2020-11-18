@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -17,6 +18,9 @@ public class VideosPage extends AbstractPage {
     protected String appliedFilterValue = "//div[@class='evnt-tag evnt-filters-tags with-delete-elem']/label[contains(text(), '%s')]";
     protected String anyVideoCard = "//div[@class='evnt-card-wrapper']";
     protected String anyChosenTag = "//div[@class = 'evnt-filters-content-cell evnt-tags-cell']//label";
+    protected String searchField = "//div[@class = 'evnt-search-filter']/input";
+    protected String videoName = "//div[@class = 'evnt-talk-name']//span";
+
 
     public VideosPage(WebDriver driver) {
         super(driver);
@@ -55,6 +59,15 @@ public class VideosPage extends AbstractPage {
     public VideoPage openVideoCard(WebElement videoCard) {
         elementClick(videoCard);
         return new VideoPage(driver);
+    }
+
+    public void filterByKeyWord(String keyWord){
+        driver.findElement(By.xpath(searchField)).sendKeys(keyWord);
+        driver.findElement(By.xpath(searchField)).sendKeys(Keys.ENTER);
+    }
+
+    public String getVideoName(WebElement videoCard){
+        return videoCard.findElement(By.xpath(videoName)).getText();
     }
 
     public String getDefinedFilter() {
