@@ -1,16 +1,16 @@
 package hooks;
 
 import driver.DriverManager;
-import org.junit.After;
-import org.junit.Before;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 
 public class DriverHooks {
-    @Before()
+    @BeforeEach()
     public void setupDriver() {
         DriverManager.setupDriver();
     }
 
-    @After()
+    @AfterEach()
     public void quitDriver() {
         DriverManager.quitDriver();
     }

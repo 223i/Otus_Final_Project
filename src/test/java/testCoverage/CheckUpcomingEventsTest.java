@@ -5,9 +5,7 @@ import driver.DriverManager;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.EventPage;
@@ -16,6 +14,8 @@ import pages.EventsPage;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class CheckUpcomingEventsTest extends TestStepsUtil {
 
@@ -31,7 +31,7 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
      * Количество карточек равно счетчику на кнопке Upcoming Events
      */
     @Test
-    public void checkUpcomingEvents2Test() {
+    public void checkUpcomingEventsTest() {
 
         logger.info("Test starts");
         WebDriver driver = DriverManager.getWebDriver();
@@ -42,7 +42,7 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
         logger.info("Number of Upcoming Events according to counter: " + eventsNumber);
         String eventCardsNumber = "" + events.getAllEventCards().size();
         logger.info("Number of shown Upcoming Events: " + eventCardsNumber);
-        Assert.assertEquals(eventsNumber, eventCardsNumber);
+        assertEquals(eventsNumber, eventCardsNumber);
         logger.info("Test finished");
     }
 
@@ -69,19 +69,19 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
 
         List<WebElement> allFoundEvents = events.getAllEventCards();
         for (int i = 0; i < allFoundEvents.size(); i++) {
-            Assert.assertFalse(events.getEventCardPlaceValue(allFoundEvents.get(i)).equals(null));
+            assertFalse(events.getEventCardPlaceValue(allFoundEvents.get(i)).equals(null));
             logger.info("Check place of event: value is + " + events.getEventCardPlaceValue(allFoundEvents.get(i)));
-            Assert.assertFalse(events.getEventCardLanguageValue(allFoundEvents.get(i)).equals(null));
+            assertFalse(events.getEventCardLanguageValue(allFoundEvents.get(i)).equals(null));
             logger.info("Check language of event: value is + " + events.getEventCardLanguageValue(allFoundEvents.get(i)));
-            Assert.assertFalse(events.getEventCardEventNameValue(allFoundEvents.get(i)).equals(null));
+            assertFalse(events.getEventCardEventNameValue(allFoundEvents.get(i)).equals(null));
             logger.info("Check name of event: value is + " + events.getEventCardEventNameValue(allFoundEvents.get(i)));
-            Assert.assertFalse(events.getEventCardEventDateValue(allFoundEvents.get(i)).equals(null));
+            assertFalse(events.getEventCardEventDateValue(allFoundEvents.get(i)).equals(null));
             logger.info("Check date of event: value is + " + events.getEventCardEventDateValue(allFoundEvents.get(i)));
-            Assert.assertFalse(events.getEventCardEventRegistrationValue(allFoundEvents.get(i)).equals(null));
+            assertFalse(events.getEventCardEventRegistrationValue(allFoundEvents.get(i)).equals(null));
             logger.info("Check type of registration: value is + " + events.getEventCardEventRegistrationValue(allFoundEvents.get(i)));
             Stream<WebElement> allSpeakers = events.getEventCardEventSpeakersValue(allFoundEvents.get(i)).stream();
             allSpeakers.forEach(speaker -> {
-                Assert.assertFalse(speaker.getAttribute("data-name").equals(null));
+                assertFalse(speaker.getAttribute("data-name").equals(null));
                 logger.info("Check speaker: value is + " + speaker.getAttribute("data-name"));
             });
         }
@@ -113,9 +113,9 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
             allEventsThisWeek.stream().forEach(eventAtThisWeek -> {
                 Date dateOfEvent = parseDateDateOfEvent(events, eventAtThisWeek, "dd MMM yyyy");
                 int weekOfEvent = getWeekNumber(dateOfEvent);
-                Assert.assertTrue("В блоке This week даты проведения мероприятий больше " +
-                                "или равны текущей дате и находятся в пределах текущей недели",
-                        (dateOfEvent.after(dateNow) || dateOfEvent.equals(dateNow)) && weekNow == weekOfEvent);
+                assertTrue((dateOfEvent.after(dateNow) || dateOfEvent.equals(dateNow)) && weekNow == weekOfEvent,
+                        "В блоке This week даты проведения мероприятий больше " +
+                                                "или равны текущей дате и находятся в пределах текущей недели");
             });
         }
         logger.info("Test finished");
@@ -142,10 +142,10 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
         EventsPage events = openEventsPage(driver);
         clickButtonUpcommingEvents(events);
         EventPage pageOfOneEvent = openPageOfOneEvent(events);
-        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getButtonRegister()));
-        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getInformationAboutEvent()));
-        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getDateAndTimeOfEvent()));
-        Assertions.assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getAgenda()));
+        assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getButtonRegister()));
+        assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getInformationAboutEvent()));
+        assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getDateAndTimeOfEvent()));
+        assertTrue(pageOfOneEvent.checkIfFieldIsShown(pageOfOneEvent.getAgenda()));
         logger.info("Test finished");
     }
 }

@@ -6,7 +6,6 @@ import io.qameta.allure.Step;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.EventPage;
@@ -19,6 +18,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class TestStepsUtil extends DriverHooks {
 
@@ -50,14 +51,14 @@ public class TestStepsUtil extends DriverHooks {
     @Step("Click button 'Upcomming events'")
     public void clickButtonUpcommingEvents(EventsPage eventsPage){
         eventsPage.clickButtonEvents("Upcoming events");
-        Assert.assertTrue(eventsPage.getAllEventCards().size() != 0);
+        assertTrue(eventsPage.getAllEventCards().size() != 0);
         logger.info("Button 'Upcoming events' is clicked");
     }
 
     @Step("Click button 'Past Events")
     public void clickButtonPastEvents(EventsPage eventsPage){
         eventsPage.clickButtonEvents("Past Events");
-        Assert.assertTrue(eventsPage.getAllEventCards().size() != 0);
+        assertTrue(eventsPage.getAllEventCards().size() != 0);
         logger.info("Button 'Past Events' is clicked");
     }
 

@@ -5,14 +5,15 @@ import driver.DriverManager;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.VideoPage;
 import pages.VideosPage;
 
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckVideoTabEventsTest extends TestStepsUtil {
 
@@ -50,7 +51,7 @@ public class CheckVideoTabEventsTest extends TestStepsUtil {
                     break;
                 }
             }
-            Assert.assertTrue(hasVideoChosenTag);
+            assertTrue(hasVideoChosenTag);
             videos = videoPage.goBackToAllVideos();
         }
         logger.info("Test finished");
@@ -72,7 +73,7 @@ public class CheckVideoTabEventsTest extends TestStepsUtil {
         filterCardsByKeyWord(videosPage, cfg.keyWord());
         List<WebElement> allFoundVideos = videosPage.getAllVideosCards();
         for (WebElement videoCard : allFoundVideos) {
-            Assert.assertTrue(videosPage.getVideoName(videoCard).contains(cfg.keyWord()));
+            assertTrue(videosPage.getVideoName(videoCard).contains(cfg.keyWord()));
         }
         logger.info("Test finished");
     }

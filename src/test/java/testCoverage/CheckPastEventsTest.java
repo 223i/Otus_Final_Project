@@ -1,16 +1,21 @@
 package testCoverage;
 
 import driver.DriverManager;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.EventsPage;
 
 import java.util.Date;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class CheckPastEventsTest extends TestStepsUtil {
 
@@ -25,6 +30,10 @@ public class CheckPastEventsTest extends TestStepsUtil {
      * 4.4 На странице отображаются карточки прошедших мероприятий. Количество карточек равно счетчику на кнопке Past Events.
      *      Даты проведенных мероприятий меньше текущей даты.
      */
+    @Epic("GitHub")
+    @Feature("Поиск репозиториев")
+    @Story("Количество найденных репозиториев равно ожидаемому значению")
+    @Description("Тест проверяет, что количество найденных репозиториев равно ожидаемому результату")
     @Test
     public void checkPastEventsInCanadaTest(){
         logger.info("Test starts");
@@ -38,12 +47,12 @@ public class CheckPastEventsTest extends TestStepsUtil {
         List<WebElement> allFoundEvents = events.getAllEventCards();
         String numberOfShownPastEvents = String.valueOf(allFoundEvents.size());
         logger.info("Number of shown past events is " + counterOfPastEvents);
-        Assert.assertTrue(counterOfPastEvents.equals(numberOfShownPastEvents));
+        assertTrue(counterOfPastEvents.equals(numberOfShownPastEvents));
         Date dateNow = getCurrentDate();
 
         allFoundEvents.stream().forEach(foundEvent ->{
             Date dateOfEvent = parseDateDateOfEvent(events, foundEvent,"dd - dd MMM yyyy");
-            Assert.assertTrue(dateNow.after(dateOfEvent));
+            assertTrue(dateNow.after(dateOfEvent));
         });
         logger.info("Test finished");
     }
