@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Collections;
 import java.util.List;
 
 public class EventsPage extends AbstractPage {
@@ -39,7 +40,7 @@ public class EventsPage extends AbstractPage {
         elementClick(waitForElement(buttonLocator));
     }
 
-    public void applyLocationFilter(String locationValue){
+    public void applyLocationFilter(String locationValue) {
         WebElement filter = driver.findElement(By.xpath(filterLocation));
         elementClick(filter);
         WebElement filterField = filter.findElement(By.xpath(filterLocation + searchFieldInFilter));
@@ -50,18 +51,22 @@ public class EventsPage extends AbstractPage {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(appliedFilterValue.replace("%s", locationValue))));
     }
 
-    public List<WebElement> getAllEventCards(){
+    public List<WebElement> getAllEventCards() {
         return driver.findElements(By.xpath(anyEventCard));
     }
 
-    public EventPage openEventCard(){
+    public EventPage openEventCard() {
         elementClick(driver.findElement(By.xpath(anyEventCard)));
         return new EventPage(driver);
     }
 
-    public List<WebElement> getThisWeekEventCards(){
+    public List<WebElement> getThisWeekEventCards() {
         WebElement thisWeek = driver.findElement(By.xpath(thisWeekEventsContainer));
-        return thisWeek.findElements(By.xpath(anyEventCard));
+        if (thisWeek.getText().contains("This week")) {
+            return thisWeek.findElements(By.xpath(anyEventCard));
+        } else {
+            return Collections.emptyList();
+        }
     }
 
     public String getEventCardPlaceValue(WebElement event) {
