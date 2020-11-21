@@ -10,7 +10,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class AbstractPage {
 
-    protected static WebDriver driver;
+    protected WebDriver driver;
     protected String menuCalendarButton = "//div[@class='evnt-platform-header']//li/a[@href='/calendar']";
     protected String menuEventsButton = "//div[@class='evnt-platform-header']//li/a[@href='/events']";
     protected String menuVideoButton = "//div[@class='evnt-platform-header']//li/a[contains(text(), 'Video')]";

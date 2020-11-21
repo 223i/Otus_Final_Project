@@ -2,10 +2,16 @@ package testCoverage;
 
 import config.ServerConfig;
 import driver.DriverManager;
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.aeonbits.owner.ConfigFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.EventPage;
@@ -17,6 +23,7 @@ import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class CheckUpcomingEventsTest extends TestStepsUtil {
 
     private Logger logger = LogManager.getLogger(CheckUpcomingEventsTest.class);
@@ -30,11 +37,16 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
      * 1.3 На странице отображаются карточки предстоящих мероприятий.
      * Количество карточек равно счетчику на кнопке Upcoming Events
      */
+    @Epic("EPAM Events")
+    @Feature("Watching upcoming events")
+    @Story("Upcoming events are shown")
+    @Description("На странице отображаются карточки предстоящих мероприятий. " +
+            "Количество карточек равно счетчику на кнопке Upcoming Events")
     @Test
     public void checkUpcomingEventsTest() {
 
         logger.info("Test starts");
-        WebDriver driver = DriverManager.getWebDriver();
+//        WebDriver driver = getWebDriver();
         openUrl(driver);
         EventsPage events = openEventsPage(driver);
         clickButtonUpcommingEvents(events);
@@ -59,10 +71,20 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
      * • информация о регистрации
      * • список спикеров
      */
+    @Epic("EPAM Events")
+    @Feature("Watching upcoming events")
+    @Story("Check information about events")
+    @Description("На странице отображаются карточки предстоящих мероприятий. " +
+            "В карточке указана информация о мероприятии:\n" +
+            "• место проведения, язык\n" +
+            "• название мероприятия\n" +
+            "• дата мероприятия\n" +
+            "• информация о регистрации\n" +
+            "• список спикеров")
     @Test
     public void checkEventCardTest() {
         logger.info("Test starts");
-        WebDriver driver = DriverManager.getWebDriver();
+//        WebDriver driver = getWebDriver();
         openUrl(driver);
         EventsPage events = openEventsPage(driver);
         clickButtonUpcommingEvents(events);
@@ -96,10 +118,14 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
      * 3.3 На странице отображаются карточки предстоящих мероприятий.
      * 3.4 В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели.
      */
+    @Epic("EPAM Events")
+    @Feature("Watching upcoming events")
+    @Story("Validate date of upcoming events")
+    @Description(" В блоке This week даты проведения мероприятий больше или равны текущей дате и находятся в пределах текущей недели")
     @Test
     public void validateDateOfUpcomingEventsTest() {
         logger.info("Test starts");
-        WebDriver driver = DriverManager.getWebDriver();
+//        WebDriver driver = getWebDriver();
         openUrl(driver);
         EventsPage events = openEventsPage(driver);
         clickButtonUpcommingEvents(events);
@@ -133,10 +159,17 @@ public class CheckUpcomingEventsTest extends TestStepsUtil {
      * 5.6 На странице с информацией о мероприятии отображается блок с кнопкой для регистрации,
      * дата и время, программа мероприятия
      */
+    @Epic("EPAM Events")
+    @Feature("Watching upcoming events")
+    @Story("Check information about chosen event")
+    @Description("Пользователь нажимает на любую карточку\n" +
+            "Происходит переход на страницу с подробной информацией о мероприятии\n" +
+            " На странице с информацией о мероприятии отображается блок с кнопкой для регистрации,\n" +
+            "дата и время, программа мероприятия")
     @Test
     public void checkDetailedInformationAboutEventTest() {
         logger.info("Test starts");
-        WebDriver driver = DriverManager.getWebDriver();
+//        WebDriver driver = getWebDriver();
         driver.get(cfg.url());
         openUrl(driver);
         EventsPage events = openEventsPage(driver);

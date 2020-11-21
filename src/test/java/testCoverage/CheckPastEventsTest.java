@@ -8,6 +8,8 @@ import io.qameta.allure.Story;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.parallel.Execution;
+import org.junit.jupiter.api.parallel.ExecutionMode;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import pages.EventsPage;
@@ -17,6 +19,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+@Execution(ExecutionMode.CONCURRENT)
 public class CheckPastEventsTest extends TestStepsUtil {
 
     private Logger logger = LogManager.getLogger(CheckUpcomingEventsTest.class);
@@ -30,14 +33,16 @@ public class CheckPastEventsTest extends TestStepsUtil {
      * 4.4 На странице отображаются карточки прошедших мероприятий. Количество карточек равно счетчику на кнопке Past Events.
      *      Даты проведенных мероприятий меньше текущей даты.
      */
-    @Epic("GitHub")
-    @Feature("Поиск репозиториев")
-    @Story("Количество найденных репозиториев равно ожидаемому значению")
-    @Description("Тест проверяет, что количество найденных репозиториев равно ожидаемому результату")
+    @Epic("EPAM Events")
+    @Feature("Watching past events in Canada")
+    @Story("Past events in Canada are shown")
+    @Description("Тест проверяет, что На странице отображаются карточки прошедших мероприятий. " +
+            "Количество карточек равно счетчику на кнопке Past Events." +
+            "Даты проведенных мероприятий меньше текущей даты")
     @Test
     public void checkPastEventsInCanadaTest(){
         logger.info("Test starts");
-        WebDriver driver = DriverManager.getWebDriver();
+//        WebDriver driver = getWebDriver();
         openUrl(driver);
         EventsPage events = openEventsPage(driver);
         clickButtonPastEvents(events);

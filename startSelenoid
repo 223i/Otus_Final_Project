@@ -1,0 +1,8 @@
+#!/bin/bash
+open --hide --background -a Docker
+curl -Lo cm https://github.com/aerokube/cm/releases/download/1.7.2/cm_darwin_amd64
+chmod +x cm
+./cm selenoid start --vnc
+./cm selenoid-ui start
+docker pull selenoid/chrome:87.0
+mvn clean test

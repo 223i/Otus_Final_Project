@@ -1,0 +1,23 @@
+{
+  "chrome": {
+    "default": "87.0",
+    "versions": {
+      "87.0": {
+        "image": "selenoid/vnc_chrome:87.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {
+          "/tmp": "size=128m"
+        }
+      },
+      "86.0": {
+        "image": "selenoid/vnc_chrome:86.0",
+        "port": "4444",
+        "path": "/",
+        "tmpfs": {
+          "/tmp": "size=128m"
+        }
+      }
+    }
+  }
+}

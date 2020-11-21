@@ -1,6 +1,7 @@
 package testCoverage;
 
 import config.ServerConfig;
+import driver.DriverManager;
 import hooks.DriverHooks;
 import io.qameta.allure.Step;
 import org.aeonbits.owner.ConfigFactory;
@@ -21,7 +22,7 @@ import java.util.Locale;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TestStepsUtil extends DriverHooks {
+public class TestStepsUtil extends DriverManager {
 
     private Logger logger = LogManager.getLogger(CheckUpcomingEventsTest.class);
     private ServerConfig cfg = ConfigFactory.create(ServerConfig.class);
